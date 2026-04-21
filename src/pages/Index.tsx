@@ -276,7 +276,7 @@ const Index = () => {
               <label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Matter type</label>
               <Select value={matterType} onValueChange={setMatterType}>
                 <SelectTrigger
-                  className={`mt-2 h-auto w-full border-0 border-b-0 bg-transparent px-3 py-2 text-left shadow-none ring-0 focus:ring-0 focus:ring-offset-0 md:rounded-none md:border-b md:border-border md:px-0 md:data-[placeholder]:text-sm ${
+                  className={`mt-2 h-auto w-full border-0 border-b-0 bg-transparent px-0 py-2 pr-8 text-left shadow-none ring-0 focus:ring-0 focus:ring-offset-0 md:rounded-none md:border-b md:border-border md:data-[placeholder]:text-sm ${
                     matterType ? "text-base text-foreground" : "text-sm text-muted-foreground"
                   }`}
                 >
