@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Whitfield & Associates Website
 
 TODO: Document your project here
