@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import founder from "@/assets/founder.jpg";
 import accent from "@/assets/accent.jpg";
 import { Button } from "@/components/ui/button";
 import { Scale, Briefcase, Users, Home, Shield, FileText, Phone, Mail, MapPin, ArrowRight } from "lucide-react";
@@ -88,10 +87,14 @@ const Index = () => {
           <div className="lg:col-span-5 relative animate-fade-up" style={{ animationDelay: "0.2s" }}>
             <div className="absolute -inset-4 bg-gold/10 blur-3xl rounded-full" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-elegant">
-              <img src={founder} alt="Attorney and founder of Whitfield & Associates" width={1080} height={1350} className="h-full w-full object-cover" />
+              <div
+                className="h-full w-full bg-zinc-400/70"
+                aria-label="Placeholder hero image"
+                role="img"
+              />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
-                <p className="font-serif text-xl">Adaeze Whitfield, Esq.</p>
-                <p className="text-sm text-ivory/70">Founding Partner · Trial Attorney</p>
+                <p className="font-serif text-xl">Image Placeholder</p>
+                <p className="text-sm text-ivory/70">Hero visual coming soon</p>
               </div>
             </div>
           </div>
@@ -246,7 +249,19 @@ const Index = () => {
             </div>
             <div>
               <label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Matter type</label>
-              <input className="mt-2 w-full bg-transparent border-b border-border py-2 focus:border-gold outline-none transition-smooth" placeholder="e.g. Corporate, Family, Civil Rights" />
+              <select
+                defaultValue=""
+                className="mt-2 w-full bg-transparent border-b border-border py-2 focus:border-gold outline-none transition-smooth"
+              >
+                <option value="" disabled>Select a matter type</option>
+                <option value="corporate-business">Corporate &amp; Business Law</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="family-law">Family Law</option>
+                <option value="civil-rights-employment">Civil Rights &amp; Employment</option>
+                <option value="estate-planning">Estate Planning</option>
+                <option value="personal-injury">Personal Injury</option>
+                <option value="other">Other</option>
+              </select>
             </div>
             <div>
               <label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">How can we help?</label>
