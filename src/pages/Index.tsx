@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import accent from "@/assets/accent.jpg";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Scale, Briefcase, Users, Home, Shield, FileText, Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 
 const practiceAreas = [
@@ -26,6 +27,8 @@ const testimonials = [
 ];
 
 const Index = () => {
+  const [matterType, setMatterType] = useState("");
+
   useEffect(() => {
     document.title = "Whitfield & Associates — Boutique Law Firm";
     const meta = document.querySelector('meta[name="description"]');
@@ -37,6 +40,28 @@ const Index = () => {
       m.content = content;
       document.head.appendChild(m);
     }
+  }, []);
+
+  useEffect(() => {
+    const revealElements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    revealElements.forEach((element) => {
+      element.classList.add("reveal-on-scroll");
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -102,7 +127,7 @@ const Index = () => {
       </section>
 
       {/* Trust strip */}
-      <section className="border-y border-border bg-secondary/40">
+      <section className="border-y border-border bg-secondary/40" data-reveal>
         <div className="container py-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
           <span>State Bar of Georgia</span>
           <span className="hidden md:inline text-gold">◆</span>
@@ -115,7 +140,7 @@ const Index = () => {
       </section>
 
       {/* Practice areas */}
-      <section id="practice" className="container py-24 lg:py-32">
+      <section id="practice" className="container py-24 lg:py-32" data-reveal>
         <div className="max-w-2xl mb-16">
           <span className="text-xs uppercase tracking-[0.25em] text-gold">Practice Areas</span>
           <h2 className="mt-4 font-serif text-4xl md:text-5xl text-balance">Counsel across the matters that shape lives and businesses.</h2>
@@ -135,7 +160,7 @@ const Index = () => {
       </section>
 
       {/* About */}
-      <section id="about" className="bg-secondary/50">
+      <section id="about" className="bg-secondary/50" data-reveal>
         <div className="container py-24 lg:py-32 grid lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-5 relative">
             <img src={accent} alt="Classical courthouse columns" loading="lazy" width={1200} height={1500} className="rounded-sm shadow-soft aspect-[4/5] object-cover w-full" />
@@ -174,7 +199,7 @@ const Index = () => {
       </section>
 
       {/* Results */}
-      <section id="results" className="bg-ink text-ivory">
+      <section id="results" className="bg-ink text-ivory" data-reveal>
         <div className="container py-20 lg:py-24">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-xs uppercase tracking-[0.25em] text-gold">Results</span>
@@ -192,7 +217,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="container py-24 lg:py-32">
+      <section className="container py-24 lg:py-32" data-reveal>
         <div className="max-w-2xl mb-16">
           <span className="text-xs uppercase tracking-[0.25em] text-gold">Client Voices</span>
           <h2 className="mt-4 font-serif text-4xl md:text-5xl text-balance">Trusted when it matters most.</h2>
@@ -212,7 +237,7 @@ const Index = () => {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="bg-gradient-hero text-ivory">
+      <section id="contact" className="bg-gradient-hero text-ivory" data-reveal>
         <div className="container py-24 lg:py-32 grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <span className="text-xs uppercase tracking-[0.25em] text-gold">Consultation</span>
@@ -249,19 +274,24 @@ const Index = () => {
             </div>
             <div>
               <label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Matter type</label>
-              <select
-                defaultValue=""
-                className="mt-2 w-full bg-transparent border-b border-border py-2 focus:border-gold outline-none transition-smooth"
-              >
-                <option value="" disabled>Select a matter type</option>
-                <option value="corporate-business">Corporate &amp; Business Law</option>
-                <option value="real-estate">Real Estate</option>
-                <option value="family-law">Family Law</option>
-                <option value="civil-rights-employment">Civil Rights &amp; Employment</option>
-                <option value="estate-planning">Estate Planning</option>
-                <option value="personal-injury">Personal Injury</option>
-                <option value="other">Other</option>
-              </select>
+              <Select value={matterType} onValueChange={setMatterType}>
+                <SelectTrigger
+                  className={`mt-2 h-auto w-full border-0 border-b-0 bg-transparent px-3 py-2 text-left shadow-none ring-0 focus:ring-0 focus:ring-offset-0 md:rounded-none md:border-b md:border-border md:px-0 md:data-[placeholder]:text-sm ${
+                    matterType ? "text-base text-foreground" : "text-sm text-muted-foreground"
+                  }`}
+                >
+                  <SelectValue placeholder="Select a matter type" />
+                </SelectTrigger>
+                <SelectContent className="border-border bg-card text-foreground shadow-elegant">
+                  <SelectItem value="corporate-business">Corporate &amp; Business Law</SelectItem>
+                  <SelectItem value="real-estate">Real Estate</SelectItem>
+                  <SelectItem value="family-law">Family Law</SelectItem>
+                  <SelectItem value="civil-rights-employment">Civil Rights &amp; Employment</SelectItem>
+                  <SelectItem value="estate-planning">Estate Planning</SelectItem>
+                  <SelectItem value="personal-injury">Personal Injury</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">How can we help?</label>
